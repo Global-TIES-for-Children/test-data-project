@@ -18,4 +18,5 @@ Imports:
     data.table,
     tidytable,
     magrittr,
-    osfr
+    osfr,
+    callr
