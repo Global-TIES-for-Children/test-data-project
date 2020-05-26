@@ -1,0 +1,37 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+name: build-project
+
+jobs:
+  build-project:
+    runs-on: macOS-latest
+    steps:
+      - actions/checkout@v2
+      - r-lib/actions/setup-r@master
+      - name: Install dependencies
+        run: |
+          install.packages("remotes")
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+      - name: Create drake cache
+        uses: actions/cache@v1
+        with:
+          path: .drake
+          key: ${{ runner.os }}-build-drake-${{ hashFiles('_drake.R')) }}
+          restore-keys: |
+            ${{ runner.os }}-build-drake-
+      - name: Create OSF cache
+        uses: actions/cache@v1
+        with:
+          path: osfcache
+          key: ${{ runner.os }}-build-osf-${{ hashFiles('osfcache/**/*') }}
+          restore-keys: |
+            ${{ runner.os }}-build-osf-
+      - name: Run drake pipeline
+        run: Rscript make.R
