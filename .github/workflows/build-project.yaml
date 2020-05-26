@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: .drake
-          key: ${{ runner.os }}-build-drake-${{ hashFiles('_drake.R')) }}
+          key: ${{ runner.os }}-build-drake-${{ hashFiles('_drake.R') }}
           restore-keys: |
             ${{ runner.os }}-build-drake-
       - name: Create OSF cache
