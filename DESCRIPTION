@@ -1,0 +1,21 @@
+Package: testdataproject
+Title: A test data project using Drake, Github, and OSF
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Patrick",
+           family = "Anker",
+           role = c("aut", "cre"),
+           email = "psanker@nyu.edu")
+Description: What the package does (one paragraph).
+License: `use_mit_license()`, `use_gpl3_license()` or friends to
+    pick a license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+Imports: 
+    here,
+    drake,
+    data.table,
+    tidytable,
+    magrittr,
+    osfr
