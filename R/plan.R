@@ -23,6 +23,6 @@ the_plan <- drake_plan(
     sum_file <- fwrite(summarized_mtcars, file = sum_file_path)
 
     osfr::osf_retrieve_node("dbpy9") %>% 
-      osfr::osf_upload(sum_file_path)
+      osfr::osf_upload(sum_file_path, conflicts = "overwrite")
   }
 )
