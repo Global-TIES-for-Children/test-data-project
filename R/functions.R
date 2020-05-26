@@ -1,4 +1,4 @@
-osfcache_get <- function(guid, cache_dir = "osfcache", create_cache_dir = TRUE, ...) {
+osfcache_get <- function(guid, cache_dir = here::here("osfcache"), create_cache_dir = TRUE, ...) {
   meta_dir <- file.path(cache_dir, "meta")
   asset_dir <- file.path(cache_dir, "assets")
 
@@ -25,7 +25,7 @@ osfcache_get <- function(guid, cache_dir = "osfcache", create_cache_dir = TRUE, 
   active_file_meta
 }
 
-osfcache_is_outdated <- function(guid, cache_dir = "osfcache", create_cache_dir = TRUE) {
+osfcache_is_outdated <- function(guid, cache_dir = here::here("osfcache"), create_cache_dir = TRUE) {
   meta_dir <- file.path(cache_dir, "meta")
   asset_dir <- file.path(cache_dir, "assets")
 
