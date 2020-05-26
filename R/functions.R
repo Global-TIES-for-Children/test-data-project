@@ -49,7 +49,7 @@ osfcache_is_outdated <- function(guid, cache_dir = here::here("osfcache"), creat
     return(osf_last_updated(remote_file_meta) > osf_last_updated(cached_file_meta))
   }
 
-  FALSE
+  TRUE
 }
 
 osfcache_download <- function(osf_file_meta, asset_dir, meta_dir, ...) {
