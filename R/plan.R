@@ -1,7 +1,7 @@
 the_plan <- drake_plan(
   raw_mtcars = target(
     command = {
-      meta <- osfcache_get("8krjy")
+      meta <- osfcache_get("8krjy", conflicts = "overwrite")
 
       fread(here::here(osf_path(meta)))
     },
@@ -14,7 +14,9 @@ the_plan <- drake_plan(
     as_dt(raw_mtcars) %>% 
     summarize.(
       avg_mpg = mean(mpg),
-      sd_mpg = sd(mpg)
+      sd_mpg = sd(mpg),
+      count = n.(),
+      by = cyl
     ) %>%
     as.data.frame(),
 
