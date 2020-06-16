@@ -1,3 +1,17 @@
+#' Retrieve an object from the OSF cache
+#' 
+#' By default, objects downloaded from OSF will be stored in the "osfcache"
+#' folder. In that folder there are two folders: "meta" and "assets".
+#' The "meta" stores serialized `osfr` metadata objects, and the
+#' "assets" folder keeps the downloads themselves. If the requested object
+#' doesn't exist in the cache or is outdated, the most recently updated
+#' object will be downloaded.
+#' 
+#' @param guid The GUID on OSF for the desired object.
+#' @param cache_dir The OSF cache location. Defaults to `here::here("osfcache")`
+#' @param create_cache_dir Create the cache directories if they don't exist. Defaults to `TRUE`
+#' @param ... Any parameters passed to `osfr::osf_download`
+#' @return The current `osf_tbl` associated with the requested object
 osfcache_get <- function(guid, cache_dir = here::here("osfcache"), create_cache_dir = TRUE, ...) {
   meta_dir <- file.path(cache_dir, "meta")
   asset_dir <- file.path(cache_dir, "assets")
@@ -67,6 +81,11 @@ osf_guid <- function(osf_tbl) {
   osf_tbl$meta[[1]]$attributes$guid
 }
 
+#' Get the location of a cached OSF download
+#' 
+#' @param osf_tbl An `osf_tbl` metadata object that is associated with an object
+#'                in the OSF cache.
+#'  @return The object's local path
 osf_path <- function(osf_tbl) {
   osf_tbl$local_path
 }

@@ -6,9 +6,10 @@ Authors@R:
            family = "Anker",
            role = c("aut", "cre"),
            email = "psanker@nyu.edu")
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+Description: This project is a demonstration of using the R package architecture
+    with Drake and the Open Science Framework to create a coherent project
+    structure aimed at scalable and reproducible research.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

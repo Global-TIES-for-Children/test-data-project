@@ -11,6 +11,10 @@ source(here::here("R/packages.R"))
 source(here::here("R/functions.R"))
 source(here::here("R/plan.R"))
 
+# For future projects, you may use as many R files as necessary to organize
+# your functions, but they should *always* be sourced prior to sourcing your
+# plan files.
+
 # Set up the OSF authentication
 osfr::osf_auth(token = Sys.getenv("OSF_PAT"))
 
