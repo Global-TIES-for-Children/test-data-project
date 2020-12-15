@@ -1,20 +1,18 @@
 on:
   push:
-    branches:
-      - main
-      - 'staging/v*'
-  pull_request:
-    branches:
-      - main
-      - 'staging/v*'
+    tags:
+      - v*
 
-name: build-project
+name: export-data
 
 jobs:
-  build-project:
+  export-data:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Fetch tag
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Create package cache
@@ -48,5 +46,7 @@ jobs:
       - name: Run drake pipeline
         env:
           OSF_PAT: ${{ secrets.OSF_PAT }}
+          F_OSF_UPLOAD: TRUE
+          GH_TAG: ${{ steps.vars.outputs.tag }}
           F_RUN_TESTS: TRUE
         run: Rscript make.R
