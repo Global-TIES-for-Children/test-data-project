@@ -21,7 +21,10 @@ source(here::here("config/plan.R"))
 # Run tests if configured
 if (isTRUE(F_RUN_TESTS)) {
   library(testthat)
-  test_dir(here::here("tests/testthat/"))
+  
+  if (dir.exists(here::here("tests/testthat/"))) {
+    test_dir(here::here("tests/testthat/"))
+  }
 }
 
 drake_config(

@@ -21,3 +21,5 @@ Imports:
     magrittr,
     osfr,
     callr
+Suggests: 
+    testthat
