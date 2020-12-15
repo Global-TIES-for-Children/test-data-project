@@ -20,11 +20,19 @@ the_plan <- drake_plan(
     ) %>%
     as.data.frame(),
 
-  upload_summarized = {
-    sum_file_path <- file.path(tempdir(), "summarized_mtcars.csv")
-    sum_file <- fwrite(summarized_mtcars, file = sum_file_path)
-
-    osfr::osf_retrieve_node("dbpy9") %>% 
-      osfr::osf_upload(sum_file_path, conflicts = "overwrite")
-  }
+  upload_summarized = target(
+    command = {
+      sum_file_path <- file.path(tempdir(), "summarized_mtcars.csv")
+      sum_file <- fwrite(summarized_mtcars, file = sum_file_path)
+  
+      if (isTRUE(F_OSF_UPLOAD)) {
+        osfr::osf_retrieve_node("dbpy9") %>% 
+          osfr::osf_upload(sum_file_path, conflicts = "overwrite")
+      }
+    },
+    trigger = trigger(
+      condition = isTRUE(F_OSF_UPLOAD),
+      mode = "condition"
+    )
+  )
 )
