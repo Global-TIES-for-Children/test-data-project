@@ -1,21 +1,30 @@
 # All r_* functions in drake use this file to create/restore
 # child R sessions to improve reproducibility.
 
-# Load all associated functions and packages with the plan
-# utils.R: All utility functions that don't depend on other packages
-# packages.R: All packages you need to attach using library()
-# functions.R: All other functions used in your project
-# plan.R: The drake plan
-source(here::here("R/utils.R"))
-source(here::here("R/packages.R"))
-source(here::here("R/functions.R"))
-source(here::here("R/plan.R"))
+# Load function source files from R folder
+for (func_source in list.files(here::here("R"), full.names = TRUE)) {
+  source(func_source)
+}
 
-# For future projects, you may use as many R files as necessary to organize
-# your functions, but they should *always* be sourced prior to sourcing your
-# plan files.
+# Environment variables -- necessary for global variables that change execution
+F_RUN_TESTS <- as.logical(Sys.getenv("F_RUN_TESTS") %if_empty_string% "FALSE")
+F_OSF_UPLOAD <- as.logical(Sys.getenv("F_OSF_UPLOAD") %if_empty_string% "FALSE")
+GH_TAG <- Sys.getenv("GH_TAG") %if_empty_string% NULL
 
 # Set up the OSF authentication
 osfr::osf_auth(token = Sys.getenv("OSF_PAT"))
 
-drake_config(the_plan)
+# Set Drake configuration
+source(here::here("config/packages.R"))
+source(here::here("config/plan.R"))
+
+# Run tests if configured
+if (isTRUE(F_RUN_TESTS)) {
+  library(testthat)
+  test_dir(here::here("tests/testthat/"))
+}
+
+drake_config(
+  the_plan,
+  verbose = TRUE
+)
