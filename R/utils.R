@@ -7,3 +7,15 @@ stop0 <- function(...) {
   
   if (identical(x, "")) y else x
 }
+
+run_unit_tests <- function(path = here::here("tests")) {
+  if (dir.exists(path)) {
+    num_files <- length(list.files(path, pattern = "^test-.*\\.R"))
+    
+    if (num_files > 0) {
+      test_dir(path)
+    } else {
+      message("No unit tests found in 'tests' folder")
+    }
+  }
+}

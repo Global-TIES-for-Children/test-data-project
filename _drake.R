@@ -1,7 +1,7 @@
 # All r_* functions in drake use this file to create/restore
 # child R sessions to improve reproducibility.
 
-# Load function source files from R folder
+# Load function definition files from R folder
 for (func_source in list.files(here::here("R"), full.names = TRUE)) {
   source(func_source)
 }
@@ -22,9 +22,7 @@ source(here::here("config/plan.R"))
 if (isTRUE(F_RUN_TESTS)) {
   library(testthat)
   
-  if (dir.exists(here::here("tests/testthat/"))) {
-    test_dir(here::here("tests/testthat/"))
-  }
+  run_unit_tests()
 }
 
 drake_config(
